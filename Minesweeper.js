@@ -94,7 +94,7 @@ function checkTile(row, column) {
     if (row < 0 || row >= rows || column < 0 || column >= columns) {
         return;
     }
-    if (board[row][column].classList.contains("tileClicked")) { // verificam sa nu se verifice de 2 ori aceeasi celula
+    if (board[row][column].classList.contains("tileClicked")) {
         return;
     }
     board[row][column].classList.add("tileClicked");
