@@ -72,7 +72,7 @@ function clickTile() {
         return;
     }
 
-    let coordonates = tile.id.split("-");
+    let coordonates = tile.id.split("-"); 
     let row = parseInt(coordonates[0]);
     let column = parseInt(coordonates[1]);
     checkTile(row, column);
@@ -100,32 +100,22 @@ function checkTile(row, column) {
     board[row][column].classList.add("tileClicked");
     ++tilesClicked;
     let minesFound = 0;
-
-    minesFound += checkMine(row - 1, column - 1);      
-    minesFound += checkMine(row - 1, column);        
-    minesFound += checkMine(row - 1, column + 1);      
-
-    minesFound += checkMine(row, column - 1);       
-    minesFound += checkMine(row, column + 1);        
-
-    minesFound += checkMine(row + 1, column - 1);     
-    minesFound += checkMine(row + 1, column);         
-    minesFound += checkMine(row + 1, column + 1);
+    
+    for (let i = row - 1; i <= row + 1; ++i) {
+        for (let j = column - 1; j <= column + 1; ++j) {
+            minesFound += checkMine(i, j);
+        }
+    }
 
     if (minesFound > 0) {
         board[row][column].innerText = minesFound;
         board[row][column].classList.add("number" + minesFound.toString());
     } else {
-        checkTile(row - 1, column - 1);
-        checkTile(row - 1, column);      
-        checkTile(row - 1, column + 1);  
-
-        checkTile(row, column - 1);
-        checkTile(row, column + 1);    
-
-        checkTile(row + 1, column - 1);    
-        checkTile(row + 1, column);
-        checkTile(row + 1, column + 1);   
+        for (let i = row - 1; i <= row + 1; ++i) {
+            for (let j = column - 1; j <= column + 1; ++j) {
+                minesFound += checkTile(i, j);
+            }
+        }  
     }
     if (tilesClicked == rows * columns - minesCount) {
         document.getElementById("minesCount").innerHTML = "Cleared";
